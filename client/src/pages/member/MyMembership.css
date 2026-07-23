@@ -1,0 +1,13 @@
+.my-membership-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #000;
+    color: #fff;
+}
+
+.my-membership-title {
+    font-size: 48px;
+    font-weight: 700;
+}

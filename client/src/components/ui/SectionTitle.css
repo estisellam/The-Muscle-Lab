@@ -1,0 +1,55 @@
+.section-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.section-title-left {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.section-eyebrow {
+    margin-bottom: 12px;
+
+    color: #facc15;
+
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .28em;
+}
+
+.section-heading {
+    max-width: 768px;
+
+    color: white;
+
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+
+    text-transform: uppercase;
+}
+
+.section-highlight {
+    color: #facc15;
+}
+
+.section-description {
+    margin-top: 20px;
+
+    max-width: 640px;
+
+    color: #a1a1aa;
+
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+@media (max-width: 640px) {
+    .section-heading {
+        font-size: 38px;
+    }
+}

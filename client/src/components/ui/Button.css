@@ -1,0 +1,59 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 28px;
+
+    border: none;
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+.button-primary {
+    background: #facc15;
+    color: #000;
+
+    box-shadow: 0 0 30px rgba(250, 204, 21, 0.18);
+}
+
+.button-primary:hover {
+    background: #fde047;
+}
+
+.button-secondary {
+    background: rgba(255,255,255,.05);
+    color: white;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    backdrop-filter: blur(8px);
+}
+
+.button-secondary:hover {
+    color: #facc15;
+    border-color: #facc15;
+}
+
+.button-purple {
+    background: #9333ea;
+    color: white;
+}
+
+.button-purple:hover {
+    background: #a855f7;
+}

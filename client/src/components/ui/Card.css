@@ -1,0 +1,9 @@
+.card {
+    background: rgba(9, 9, 11, 0.8);
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    border-radius: 12px;
+
+    backdrop-filter: blur(12px);
+}
