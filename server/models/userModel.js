@@ -80,6 +80,7 @@ export async function getAllUsers() {
         FROM Users
         INNER JOIN Roles
             ON Users.role_id = Roles.id
+        ORDER BY Users.first_name, Users.last_name
         `
     );
 
@@ -193,5 +194,20 @@ export async function deleteUser(id) {
         WHERE id = ?
         `,
         [id]
+    );
+}
+// update profile image
+export async function updateProfileImage(id, imagePath) {
+
+    await pool.execute(
+        `
+        UPDATE Users
+        SET profile_image = ?
+        WHERE id = ?
+        `,
+        [
+            imagePath,
+            id
+        ]
     );
 }

@@ -1,8 +1,11 @@
 import {
     findUserById,
     findUserPasswordById,
+    getAllUsers,
     updateUser,
-    updatePassword
+    updatePassword,
+    deleteUser,
+    updateProfileImage
 } from "../models/userModel.js";
 
 import {
@@ -104,4 +107,52 @@ export async function changeUserPassword(
     const passwordHash = await hashPassword(newPassword);
 
     await updatePassword(id, passwordHash);
+}
+// get all users
+export async function getUsers() {
+
+    return await getAllUsers();
+}
+
+// get user by id
+export async function getUserById(id) {
+
+    const user = await findUserById(id);
+
+    if (!user) {
+        throw new Error("user not found");
+    }
+
+    return user;
+}
+
+// delete user
+export async function removeUser(id) {
+
+    const user = await findUserById(id);
+
+    if (!user) {
+        throw new Error("user not found");
+    }
+
+    await deleteUser(id);
+}
+// upload profile image
+export async function uploadUserProfileImage(
+    id,
+    imagePath
+) {
+
+    const user = await findUserById(id);
+
+    if (!user) {
+        throw new Error("user not found");
+    }
+
+    await updateProfileImage(
+        id,
+        imagePath
+    );
+
+    return await findUserById(id);
 }

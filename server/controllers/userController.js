@@ -1,7 +1,11 @@
 import {
     getUserProfile,
     updateUserProfile,
-    changeUserPassword
+    changeUserPassword,
+    getUsers,
+    getUserById,
+    removeUser,
+    uploadUserProfileImage
 } from "../services/userService.js";
 
 // get profile
@@ -73,4 +77,94 @@ export async function changePassword(req, res) {
         });
 
     }
+}
+// get all users
+export async function getAllUsers(req, res) {
+
+    try {
+
+        const users = await getUsers();
+
+        res.status(200).json(users);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+}
+
+// get user by id
+export async function getUser(req, res) {
+
+    try {
+
+        const user = await getUserById(req.params.id);
+
+        res.status(200).json(user);
+
+    } catch (error) {
+
+        res.status(404).json({
+            message: error.message
+        });
+
+    }
+}
+
+// delete user
+export async function deleteUser(req, res) {
+
+    try {
+
+        await removeUser(req.params.id);
+
+        res.status(200).json({
+            message: "user deleted successfully"
+        });
+
+    } catch (error) {
+
+        res.status(404).json({
+            message: error.message
+        });
+
+    }
+}
+// upload profile image
+export async function uploadProfileImage(req, res) {
+
+    try {
+
+        if (!req.file) {
+
+            return res.status(400).json({
+                message: "image file is required"
+            });
+
+        }
+
+        const imagePath =
+            `/uploads/profile-images/${req.file.filename}`;
+
+        const user = await uploadUserProfileImage(
+            req.user.id,
+            imagePath
+        );
+
+        res.status(200).json({
+            message: "profile image uploaded successfully",
+            user
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+
 }
