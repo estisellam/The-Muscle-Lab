@@ -10,7 +10,7 @@ export async function findUserByEmail(email) {
             Roles.name AS role
         FROM Users
         INNER JOIN Roles
-        ON Users.role_id = Roles.id
+            ON Users.role_id = Roles.id
         WHERE Users.email = ?
         `,
         [email]
@@ -24,7 +24,34 @@ export async function findUserById(id) {
 
     const [rows] = await pool.execute(
         `
-        SELECT *
+        SELECT
+            Users.id,
+            Users.first_name,
+            Users.last_name,
+            Users.email,
+            Users.phone,
+            Users.birth_date,
+            Users.gender,
+            Users.profile_image,
+            Users.join_date,
+            Roles.name AS role
+        FROM Users
+        INNER JOIN Roles
+            ON Users.role_id = Roles.id
+        WHERE Users.id = ?
+        `,
+        [id]
+    );
+
+    return rows[0];
+}
+
+// find user password by id
+export async function findUserPasswordById(id) {
+
+    const [rows] = await pool.execute(
+        `
+        SELECT password_hash
         FROM Users
         WHERE id = ?
         `,
@@ -41,18 +68,18 @@ export async function getAllUsers() {
         `
         SELECT
             Users.id,
-            first_name,
-            last_name,
-            email,
-            phone,
-            birth_date,
-            gender,
-            profile_image,
-            join_date,
+            Users.first_name,
+            Users.last_name,
+            Users.email,
+            Users.phone,
+            Users.birth_date,
+            Users.gender,
+            Users.profile_image,
+            Users.join_date,
             Roles.name AS role
         FROM Users
         INNER JOIN Roles
-        ON Users.role_id = Roles.id
+            ON Users.role_id = Roles.id
         `
     );
 
@@ -62,7 +89,7 @@ export async function getAllUsers() {
 // create user
 export async function createUser(user) {
 
-    const [role] = await pool.execute(
+    const [roles] = await pool.execute(
         `
         SELECT id
         FROM Roles
@@ -70,7 +97,11 @@ export async function createUser(user) {
         `
     );
 
-    const roleId = role[0].id;
+    if (roles.length === 0) {
+        throw new Error("member role not found");
+    }
+
+    const roleId = roles[0].id;
 
     await pool.execute(
         `
