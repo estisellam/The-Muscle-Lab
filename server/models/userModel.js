@@ -5,9 +5,13 @@ export async function findUserByEmail(email) {
 
     const [rows] = await pool.execute(
         `
-        SELECT *
+        SELECT
+            Users.*,
+            Roles.name AS role
         FROM Users
-        WHERE email = ?
+        INNER JOIN Roles
+        ON Users.role_id = Roles.id
+        WHERE Users.email = ?
         `,
         [email]
     );
@@ -47,7 +51,7 @@ export async function getAllUsers() {
             join_date,
             Roles.name AS role
         FROM Users
-        JOIN Roles
+        INNER JOIN Roles
         ON Users.role_id = Roles.id
         `
     );
