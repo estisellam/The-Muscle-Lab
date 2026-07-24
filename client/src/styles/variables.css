@@ -1,0 +1,45 @@
+:root {
+
+  /* Colors */
+
+  --background: #0B0B0B;
+  --surface: #161616;
+  --surface-light: #1E1E1E;
+
+  --primary: #FFD400;
+  --secondary: #7C3AED;
+
+  --white: #FFFFFF;
+
+  --text: #F5F5F5;
+  --text-secondary: #A1A1AA;
+
+  --border: #2A2A2A;
+
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
+
+
+  /* Radius */
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+
+  /* Shadows */
+
+  --shadow-card: 0 12px 40px rgba(0,0,0,.45);
+  --shadow-yellow: 0 0 20px rgba(255,212,0,.35);
+  --shadow-purple: 0 0 20px rgba(124,58,237,.35);
+
+
+  /* Fonts */
+
+  --font-heading: "Bebas Neue", sans-serif;
+  --font-title: "Montserrat", sans-serif;
+  --font-body: "Poppins", sans-serif;
+}

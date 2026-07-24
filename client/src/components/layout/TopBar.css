@@ -1,0 +1,56 @@
+.topbar {
+  height: 85px;
+  min-height: 100px;
+  background: #18181b;
+  border-bottom: 1px solid #27272a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 35px;
+}
+
+.topbar-left h2 {
+  margin: 0;
+  color: white;
+  font-size: 1.6rem;
+}
+
+.topbar-left p {
+  margin-top: 6px;
+  color: #a1a1aa;
+  font-size: 0.95rem;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.user-name {
+  color: white;
+  font-weight: 600;
+}
+
+.user-role {
+  color: #facc15;
+  font-size: 0.85rem;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid #9333ea;
+}

@@ -1,13 +1,7 @@
-import "./Dashboard.css";
-
 function Dashboard() {
-  return (
-    <div className="dashboard-page">
-      <h1 className="dashboard-title">
-        Member Dashboard
-      </h1>
-    </div>
-  );
+    return (
+        <h1>Dashboard</h1>
+    );
 }
 
 export default Dashboard;

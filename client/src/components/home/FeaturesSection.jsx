@@ -4,11 +4,7 @@ import {
   Gauge,
   Users,
 } from "lucide-react";
-
 import "./FeaturesSection.css";
-
-import Card from "../ui/Card";
-import SectionTitle from "../ui/SectionTitle";
 
 const benefits = [
   {
@@ -45,21 +41,33 @@ function FeaturesSection() {
   return (
     <section className="features-section">
       <div className="container">
-        <SectionTitle
-          eyebrow="Why Choose Us"
-          title="Everything You Need To"
-          highlightedText="Become Stronger"
-          description="The Muscle Lab gives every member the tools, guidance and environment needed to build lasting results."
-        />
+        <div className="section-title">
+
+            <p className="section-eyebrow">
+                Why Choose Us
+            </p>
+
+            <h2 className="section-heading">
+                Everything You Need To
+                <span className="section-highlight">
+                    {" "}Become Stronger
+                </span>
+            </h2>
+
+            <p className="section-description">
+                The Muscle Lab gives every member the tools, guidance and environment needed to build lasting results.
+            </p>
+
+        </div>
 
         <div className="features-grid">
           {benefits.map((benefit) => {
             const Icon = benefit.icon;
 
             return (
-              <Card
-                key={benefit.id}
-                className="feature-card"
+              <div
+                  key={benefit.id}
+                  className="card feature-card"
               >
                 <div className="feature-icon">
                   <Icon size={28} />
@@ -72,7 +80,7 @@ function FeaturesSection() {
                 <p className="feature-description">
                   {benefit.description}
                 </p>
-              </Card>
+              </div>
             );
           })}
         </div>

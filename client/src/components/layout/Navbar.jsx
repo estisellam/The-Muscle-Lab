@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import logo from "../../assets/logos/logo.png";
 
 import "./Navbar.css";
+import Button from "../ui/Button";
 
 function Navbar() {
   const navLinkClass = ({ isActive }) =>
@@ -12,7 +13,7 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="container navbar-container">
-        <Link
+        <Link 
           to="/"
           aria-label="The Muscle Lab home"
           className="navbar-logo"
@@ -35,13 +36,15 @@ function Navbar() {
         </nav>
 
         <div className="navbar-actions">
-          <Link to="/login" className="login-button">
-            Login
-          </Link>
+          <Button
+              to="/login"
+              variant="secondary">
+              Login
+          </Button>
 
-          <Link to="/register" className="register-button">
-            Sign Up
-          </Link>
+          <Button to="/register">
+              Sign Up
+          </Button>
         </div>
 
         <button

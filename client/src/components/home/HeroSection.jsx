@@ -7,12 +7,9 @@ import {
 } from "lucide-react";
 
 import "./HeroSection.css";
-
+import Button from "../ui/Button";
 import heroMan from "../../assets/images/hero-man.png";
 import heroBackground from "../../assets/images/hero-background.png";
-
-import Button from "../ui/Button";
-import Card from "../ui/Card";
 
 const features = [
   {

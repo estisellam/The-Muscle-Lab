@@ -4,10 +4,9 @@ import "./Button.css";
 function Button({
   children,
   to,
-  type = "button",
   variant = "primary",
   className = "",
-  onClick,
+  ...props
 }) {
   const buttonClass = `button button-${variant} ${className}`;
 
@@ -21,9 +20,8 @@ function Button({
 
   return (
     <button
-      type={type}
       className={buttonClass}
-      onClick={onClick}
+      {...props}
     >
       {children}
     </button>

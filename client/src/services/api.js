@@ -1,0 +1,66 @@
+const BASE_URL = "http://localhost:3000/api";
+
+async function apiRequest(
+    endpoint,
+    options = {}
+) {
+
+    const token =
+        localStorage.getItem("token") ||
+        sessionStorage.getItem("token");
+
+    const headers = {
+        ...options.headers,
+    };
+
+    if (!(options.body instanceof FormData)) {
+
+        headers["Content-Type"] = "application/json";
+
+    }
+
+    if (token) {
+
+        headers.Authorization = `Bearer ${token}`;
+
+    }
+
+    const response = await fetch(
+        `${BASE_URL}${endpoint}`,
+        {
+            ...options,
+            headers,
+        }
+    );
+
+    if (response.status === 401) {
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+
+        window.location.href = "/login";
+
+        return;
+
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+        throw {
+            response: {
+                data,
+            },
+        };
+
+    }
+
+    return data;
+
+}
+
+export default apiRequest;

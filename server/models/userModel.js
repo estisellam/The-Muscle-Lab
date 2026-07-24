@@ -129,15 +129,15 @@ export async function createUser(user) {
             ?
         )
         `,
-        [
+       [
             roleId,
             user.first_name,
             user.last_name,
             user.email,
             user.password_hash,
-            user.phone,
-            user.birth_date,
-            user.gender
+            user.phone ?? null,
+            user.birth_date ?? null,
+            user.gender ?? null
         ]
     );
 }
