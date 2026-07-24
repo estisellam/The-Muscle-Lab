@@ -90,4 +90,15 @@ export async function getMyClasses() {
 
 }
 
+export async function cancelClassRegistration(classId) {
+
+    return await apiRequest(
+        `/classes/${classId}/register`,
+        {
+            method: "DELETE"
+        }
+    );
+
+}
+
 export default apiRequest;

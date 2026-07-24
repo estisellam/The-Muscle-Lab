@@ -2,7 +2,8 @@ import express from "express";
 import {
     getAllClasses,
     registerToClass,
-    getMyClasses
+    getMyClasses,
+    cancelClassRegistration
 } from "../services/classService.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
@@ -79,6 +80,35 @@ router.post(
 
             res.status(500).json({
                 message: "Registration failed."
+            });
+
+        }
+
+    }
+);
+
+router.delete(
+    "/:id/register",
+    authMiddleware,
+    async (req, res) => {
+
+        try {
+
+            await cancelClassRegistration(
+                req.params.id,
+                req.user.id
+            );
+
+            res.json({
+                message: "Registration cancelled."
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            res.status(500).json({
+                message: error.message
             });
 
         }

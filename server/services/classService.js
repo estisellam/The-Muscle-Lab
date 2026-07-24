@@ -136,3 +136,22 @@ export async function getMyClasses(userId) {
     return rows;
 
 }
+
+export async function cancelClassRegistration(
+    classId,
+    userId
+) {
+
+    await pool.query(
+        `
+        DELETE FROM ClassRegistrations
+        WHERE class_id = ?
+        AND user_id = ?
+        `,
+        [
+            classId,
+            userId
+        ]
+    );
+
+}

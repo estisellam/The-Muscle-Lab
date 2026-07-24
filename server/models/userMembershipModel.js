@@ -3,34 +3,31 @@ import pool from "../config/db.js";
 // get membership by user id
 export async function findMembershipByUserId(userId) {
 
-    const [rows] = await pool.execute(
+    const [rows] = await pool.query(
         `
         SELECT
-            UserMemberships.id,
-            UserMemberships.start_date,
-            UserMemberships.end_date,
-            UserMemberships.status,
-
-            MembershipPlans.id AS plan_id,
-            MembershipPlans.name,
-            MembershipPlans.duration_months,
-            MembershipPlans.price,
-            MembershipPlans.description
-
-        FROM UserMemberships
-
-        INNER JOIN MembershipPlans
-            ON UserMemberships.membership_plan_id = MembershipPlans.id
-
-        WHERE UserMemberships.user_id = ?
-        AND UserMemberships.status = 'Active'
-        ORDER BY UserMemberships.start_date DESC
+            um.id,
+            um.start_date,
+            um.end_date,
+            um.status,
+            mp.id AS membership_plan_id,
+            mp.name,
+            mp.price,
+            mp.duration_months
+        FROM UserMemberships um
+        JOIN MembershipPlans mp
+            ON um.membership_plan_id = mp.id
+        WHERE um.user_id = ?
+        AND um.status = 'Active'
         LIMIT 1
         `,
+
         [userId]
+
     );
 
-    return rows[0]||null;
+    return rows[0] || null;
+
 }
 
 // create membership

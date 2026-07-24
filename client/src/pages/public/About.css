@@ -1,0 +1,221 @@
+.about-page {
+
+    padding:40px;
+    color:white;
+
+}
+
+
+
+.about-hero {
+
+    background:#19191c;
+    border:1px solid #2c2c2f;
+    border-radius:20px;
+
+    padding:40px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+
+.about-content {
+
+    max-width:650px;
+
+}
+
+
+.about-content h1 {
+
+    font-size:42px;
+    margin-bottom:20px;
+
+}
+
+
+.about-content span {
+
+    color:#ffd400;
+
+}
+
+
+.about-content p {
+
+    color:#b8b8b8;
+    line-height:1.7;
+    font-size:17px;
+
+}
+
+
+
+.about-icon {
+
+    width:150px;
+    height:150px;
+
+    border-radius:50%;
+
+    background:#241936;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#9b35ff;
+
+}
+
+
+/* cards */
+
+
+.about-cards {
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+
+    margin-bottom:35px;
+
+}
+
+
+
+.about-card {
+
+    background:#1d1d20;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    border:1px solid #303034;
+
+}
+
+
+.about-card-icon {
+
+    width:45px;
+    height:45px;
+
+    background:#34234b;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#a63cff;
+
+    margin-bottom:15px;
+
+}
+
+
+.about-card h3 {
+
+    margin-bottom:10px;
+
+}
+
+
+.about-card p {
+
+    color:#aaa;
+
+    line-height:1.5;
+
+}
+
+
+
+/* mission */
+
+
+.about-story {
+
+    background:#19191c;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:center;
+
+}
+
+
+.about-story svg {
+
+    color:#ffd400;
+
+    width:45px;
+
+    height:45px;
+
+}
+
+
+.about-story h2 {
+
+    margin-bottom:10px;
+
+}
+
+
+.about-story p {
+
+    color:#b8b8b8;
+
+}
+
+
+
+/* responsive */
+
+@media(max-width:900px){
+
+    .about-cards{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .about-hero{
+
+        flex-direction:column;
+        gap:30px;
+
+    }
+
+
+    .about-cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
