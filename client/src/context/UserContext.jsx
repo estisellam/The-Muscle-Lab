@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProfile } from "../services/userService";
+import { getToken } from "../services/authService";
 
 const UserContext = createContext();
 
@@ -8,6 +9,16 @@ export function UserProvider({ children }) {
     const [user, setUser] = useState(null);
 
     async function refreshUser() {
+
+        const token = getToken();
+
+        if (!token) {
+
+            setUser(null);
+
+            return;
+
+        }
 
         try {
 

@@ -24,6 +24,9 @@ import MyMembership from "../pages/member/MyMembership";
 import UsersManagement from "../pages/admin/UsersManagement";
 import MembershipManagement from "../pages/admin/MembershipManagement";
 
+//classes page
+import Classes from "../pages/Classes/Classes";
+
 function AppRoutes() {
     return (
         <Routes>
@@ -66,6 +69,10 @@ function AppRoutes() {
                     path="/member/membership"
                     element={<MyMembership />}
                 />
+                <Route
+                    path="/member/classes"
+                    element={<Classes />}
+                />
             </Route>
 
 
@@ -87,13 +94,15 @@ function AppRoutes() {
                 />
             </Route>
 
-
             <Route
                 path="*"
                 element={<Navigate to="/" replace />}
             />
 
+            
         </Routes>
+
+        
     );
 }
 

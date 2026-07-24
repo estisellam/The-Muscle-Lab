@@ -67,5 +67,27 @@ async function apiRequest(
     return data;
 
 }
+export async function getClasses() {
+
+    return await apiRequest("/classes");
+
+}
+
+export async function registerToClass(classId) {
+
+    return await apiRequest(
+        `/classes/${classId}/register`,
+        {
+            method: "POST"
+        }
+    );
+
+}
+
+export async function getMyClasses() {
+
+    return await apiRequest("/classes/my");
+
+}
 
 export default apiRequest;

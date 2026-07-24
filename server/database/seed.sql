@@ -276,3 +276,72 @@ SELECT
 FROM UserMemberships um
 JOIN MembershipPlans mp
 ON um.membership_plan_id = mp.id;
+
+INSERT INTO Classes (
+    trainer_id,
+    title,
+    description,
+    class_date,
+    start_time,
+    end_time,
+    room,
+    capacity
+)
+SELECT
+    t.id,
+    'Pilates',
+    'Core strength and flexibility',
+    '2026-08-03',
+    '10:00:00',
+    '11:00:00',
+    'Studio A',
+    18
+FROM Trainers t
+JOIN Users u ON t.user_id = u.id
+WHERE u.email = 'trainer@musclelab.com';
+
+INSERT INTO Classes (
+    trainer_id,
+    title,
+    description,
+    class_date,
+    start_time,
+    end_time,
+    room,
+    capacity
+)
+SELECT
+    t.id,
+    'CrossFit',
+    'High intensity functional workout',
+    '2026-08-04',
+    '18:30:00',
+    '19:30:00',
+    'Studio C',
+    20
+FROM Trainers t
+JOIN Users u ON t.user_id = u.id
+WHERE u.email = 'trainer@musclelab.com';
+
+INSERT INTO Classes (
+    trainer_id,
+    title,
+    description,
+    class_date,
+    start_time,
+    end_time,
+    room,
+    capacity
+)
+SELECT
+    t.id,
+    'Spinning',
+    'Indoor cycling workout',
+    '2026-08-05',
+    '19:00:00',
+    '20:00:00',
+    'Studio B',
+    16
+FROM Trainers t
+JOIN Users u ON t.user_id = u.id
+WHERE u.email = 'trainer@musclelab.com';
