@@ -1,0 +1,171 @@
+.membership-page {
+
+    padding: 40px;
+    color: white;
+
+}
+
+.membership-header {
+
+    text-align: center;
+    margin-bottom: 40px;
+
+}
+
+.membership-header h1 {
+
+    font-size: 40px;
+    margin-bottom: 10px;
+
+}
+
+.membership-header p {
+
+    color: #b7b7b7;
+    font-size: 17px;
+
+}
+
+.membership-loading {
+
+    color: white;
+    text-align: center;
+    padding: 60px;
+
+}
+
+.plans-grid {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+
+}
+
+.plan-card {
+
+    background: #1b1b1f;
+
+    border: 1px solid #2f2f34;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: .3s;
+
+}
+
+.plan-card:hover {
+
+    transform: translateY(-6px);
+
+    border-color: #ffd54a;
+
+}
+
+.plan-header {
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+.plan-icon {
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background: #32224a;
+
+    color: #ffd54a;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+}
+
+.plan-duration {
+
+    color: #aaaaaa;
+    margin-bottom: 10px;
+
+}
+
+.plan-price {
+
+    margin-bottom: 25px;
+
+}
+
+.plan-price span {
+
+    font-size: 20px;
+    color: #ffd54a;
+
+}
+
+.plan-price strong {
+
+    font-size: 42px;
+    color: white;
+
+}
+
+.plan-features {
+
+    flex: 1;
+
+    margin-bottom: 30px;
+
+}
+
+.plan-feature {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 12px;
+
+}
+
+.check-icon {
+
+    color: #ffd54a;
+    font-weight: bold;
+
+}
+
+.plan-card button {
+
+    width: 100%;
+
+}
+
+@media (max-width: 768px) {
+
+    .membership-page {
+
+        padding: 25px;
+
+    }
+
+    .membership-header h1 {
+
+        font-size: 32px;
+
+    }
+
+}
