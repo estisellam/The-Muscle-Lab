@@ -23,15 +23,14 @@ export async function findMembershipByUserId(userId) {
             ON UserMemberships.membership_plan_id = MembershipPlans.id
 
         WHERE UserMemberships.user_id = ?
-
-        ORDER BY UserMemberships.end_date DESC
-
+        AND UserMemberships.status = 'Active'
+        ORDER BY UserMemberships.start_date DESC
         LIMIT 1
         `,
         [userId]
     );
 
-    return rows[0];
+    return rows[0]||null;
 }
 
 // create membership

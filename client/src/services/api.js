@@ -52,9 +52,14 @@ async function apiRequest(
     if (!response.ok) {
 
         throw {
+            message: data.message,
+
+            status: response.status,
+
             response: {
-                data,
-            },
+                status: response.status,
+                data
+            }
         };
 
     }

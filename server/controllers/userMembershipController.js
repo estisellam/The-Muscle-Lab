@@ -7,20 +7,18 @@ import {
 // get current membership
 export async function getMyMembership(req, res) {
 
-    try {
+   try {
 
-        const membership =
-            await getCurrentMembership(
-                req.user.id
-            );
-
-        res.status(200).json(
-            membership
+    const membership =
+        await getCurrentMembership(
+            req.user.id
         );
+
+    res.status(200).json(membership);
 
     } catch (error) {
 
-        res.status(404).json({
+        res.status(500).json({
             message: error.message
         });
 

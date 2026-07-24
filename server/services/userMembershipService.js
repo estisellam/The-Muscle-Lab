@@ -14,13 +14,8 @@ export async function getCurrentMembership(userId) {
     const membership =
         await findMembershipByUserId(userId);
 
-    if (!membership) {
-        throw new Error(
-            "membership not found"
-        );
-    }
-
     return membership;
+
 }
 
 // purchase membership
@@ -32,13 +27,10 @@ export async function purchaseMembership(
     const currentMembership =
         await findMembershipByUserId(userId);
 
-    if (
-        currentMembership &&
-        currentMembership.status === "Active"
-    ) {
+    if (currentMembership) {
 
         throw new Error(
-            "user already has an active membership"
+            "You already have an active membership."
         );
 
     }

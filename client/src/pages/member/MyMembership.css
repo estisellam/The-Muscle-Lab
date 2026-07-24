@@ -1,13 +1,711 @@
-.my-membership-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #000;
-    color: #fff;
+.membership-page {
+
+       display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding-bottom: 30px;
+
 }
 
-.my-membership-title {
-    font-size: 48px;
+
+
+.membership-header {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.membership-header h1 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 30px;
+
     font-weight: 700;
+
+}
+
+.membership-header p {
+
+    margin-top: 8px;
+
+    color: #9ca3af;
+
+    font-size: 14px;
+
+}
+
+
+/* ===========================
+      CURRENT MEMBERSHIP
+=========================== */
+
+.current-membership {
+
+    background: #18181b;
+
+    border: 1px solid #2d2d32;
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+
+.current-membership-info {
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.current-label {
+
+    color: #facc15;
+
+    text-transform: uppercase;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+.current-title-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 8px;
+
+}
+
+
+.current-title-row h2 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 28px;
+
+}
+
+
+.membership-status {
+
+    padding: 6px 14px;
+
+    border-radius: 50px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+.membership-status.active {
+
+    background: rgba(34,197,94,.15);
+
+    color: #22c55e;
+
+}
+
+
+.membership-status.cancelled {
+
+    background: rgba(239,68,68,.15);
+
+    color: #ef4444;
+
+}
+
+
+.membership-status.expired {
+
+    background: rgba(156,163,175,.15);
+
+    color: #9ca3af;
+
+}
+
+
+.current-membership-info p {
+
+    margin-top: 10px;
+
+    color: #a1a1aa;
+
+    max-width: 600px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ===========================
+      DETAILS
+=========================== */
+
+.current-membership-details {
+
+    display: grid;
+
+    grid-template-columns: repeat(4,1fr);
+
+    gap: 15px;
+
+}
+
+
+.membership-detail {
+
+    background: #202024;
+
+    border-radius: 14px;
+
+    border: 1px solid #31313a;
+
+    padding: 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.membership-detail span {
+
+    color: #9ca3af;
+
+    font-size: 12px;
+
+}
+
+
+.membership-detail strong {
+
+    color: white;
+
+    font-size: 18px;
+
+}
+
+
+/* ===========================
+      PROGRESS BAR
+=========================== */
+
+.membership-progress {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+.progress-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: white;
+
+    font-size: 14px;
+
+}
+
+
+.progress-bar {
+
+    height: 10px;
+
+    background: #2d2d32;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+}
+
+
+.progress-value {
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        90deg,
+        #facc15,
+        #8b5cf6
+    );
+
+    transition: width .4s;
+
+}
+
+
+/* ===========================
+      ACTIONS
+=========================== */
+
+.current-membership-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+}
+
+
+/* ===========================
+      NO MEMBERSHIP
+=========================== */
+
+.no-membership {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+.no-membership span {
+
+    color: #facc15;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+}
+
+
+.no-membership h2 {
+
+    margin: 0;
+
+    color: white;
+
+}
+
+
+.no-membership p {
+
+    margin: 0;
+
+    color: #9ca3af;
+
+}
+/* available plans */
+
+.plans-section {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    flex: 1;
+
+}
+
+
+/* plans title */
+
+.plans-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.plans-title h2 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 22px;
+
+}
+
+
+.plans-title span {
+
+    color: #9ca3af;
+
+    font-size: 14px;
+
+}
+
+
+/* plans grid */
+
+.plans-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    flex: 1;
+
+}
+
+
+/* membership card */
+
+.plan-card {
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 22px;
+
+    border-radius: 20px;
+
+    background: #18181b;
+
+    border: 1px solid #2d2d32;
+
+    transition: .25s;
+
+}
+
+
+.plan-card:hover {
+
+    transform: translateY(-6px);
+
+    border-color: #facc15;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,.35);
+
+}
+
+
+/* current membership card */
+
+.current-plan-card {
+
+    border: 2px solid #facc15;
+
+    box-shadow: 0 0 20px rgba(250,204,21,.15);
+
+}
+
+
+/* current badge */
+
+.current-plan-badge {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 18px;
+
+    padding: 6px 12px;
+
+    border-radius: 50px;
+
+    background: #facc15;
+
+    color: black;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+/* plan title */
+
+.plan-card h3 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 24px;
+
+}
+
+
+/* duration */
+
+.plan-duration {
+
+    margin-top: -10px;
+
+    color: #9ca3af;
+
+    font-size: 14px;
+
+}
+
+
+/* price */
+
+.plan-price {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 4px;
+
+}
+
+
+.plan-price span {
+
+    color: #facc15;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+}
+
+
+.plan-price strong {
+
+    color: white;
+
+    font-size: 42px;
+
+    line-height: 1;
+
+}
+
+
+/* features */
+
+.plan-features {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+/* feature */
+
+.plan-feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #d4d4d8;
+
+    font-size: 14px;
+
+}
+
+
+/* check icon */
+
+.check-icon {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 22px;
+
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: rgba(250,204,21,.15);
+
+    color: #facc15;
+
+    font-weight: bold;
+
+}
+
+
+/* button */
+
+.plan-card button {
+
+    margin-top: auto;
+
+}
+
+
+/* loading */
+
+.membership-loading {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    height: 400px;
+
+    color: white;
+
+    font-size: 18px;
+
+}
+
+
+/* tablet */
+
+@media (max-width: 1100px) {
+
+    .current-membership-details {
+
+        grid-template-columns: repeat(2,1fr);
+
+    }
+
+    .plans-grid {
+
+        grid-template-columns: repeat(2,1fr);
+
+    }
+
+}
+
+
+/* mobile */
+
+@media (max-width: 700px) {
+
+    .membership-page {
+
+        overflow-y: auto;
+
+
+
+    }
+
+    .plans-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .current-membership-details {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .current-title-row {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+    .current-membership-actions {
+
+        justify-content: stretch;
+
+    }
+
+    .current-membership-actions button {
+
+        width: 100%;
+
+    }
+
+}
+/* plan header */
+
+.plan-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+
+/* plan icon */
+
+.plan-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 14px;
+
+    background: rgba(250,204,21,.12);
+
+    color: #facc15;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 24px;
+
 }
