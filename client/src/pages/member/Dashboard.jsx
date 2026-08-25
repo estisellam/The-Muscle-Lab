@@ -11,8 +11,9 @@ import {
 
 import { useUser } from "../../context/UserContext";
 import Button from "../../components/ui/Button";
+import AICoach from "../../components/ai/AICoach";
 import "./Dashboard.css";
-import apiRequest, {getMyClasses,cancelClassRegistration} from "../../services/api";
+import apiRequest, {getMyClasses,cancelClassRegistration, getClasses} from "../../services/api";
 
 function formatDate(date) {
     return new Date(date).toLocaleDateString("en-GB", {
@@ -36,6 +37,7 @@ function Dashboard() {
 
     const [membership, setMembership] = useState(null);
     const [myClasses, setMyClasses] = useState([]);
+    const [availableClasses, setAvailableClasses] = useState([]);
     const [loading, setLoading] = useState(true);
     
     async function handleCancel(classId) {
@@ -70,9 +72,12 @@ function Dashboard() {
 
                 const classesData =
                     await getMyClasses();
+                const allClassesData =
+                    await getClasses();
 
                 setMembership(membershipData);
                 setMyClasses(classesData);
+                setAvailableClasses(allClassesData);
 
             }
             catch (err) {
@@ -216,7 +221,9 @@ function Dashboard() {
 
                     <span>
 
-                        {formatDate(membership?.end_date)}
+                        {membership?.end_date
+                            ? formatDate(membership.end_date)
+                            : "—"}
 
                     </span>
 
@@ -350,7 +357,20 @@ function Dashboard() {
 
                             </Button>
 
+                            <Button to="/member/calendar">
+
+                                Open Calendar
+
+                            </Button>
+
                         </div>
+
+                        <AICoach
+                            user={user}
+                            membership={membership}
+                            myClasses={myClasses}
+                            availableClasses={availableClasses}
+                        />
 
                     </div>
 

@@ -1,0 +1,108 @@
+.users-management-page {
+    /* keep layout consistent with DashboardLayout rather than forcing a full-page background */
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    min-height: auto;
+}
+
+.users-management-panel {
+    max-width: none;
+    margin: 0;
+    padding: 8px 0;
+}
+
+.users-management-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.users-management-form {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+}
+
+.users-management-form input,
+.users-management-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.35);
+    color: inherit;
+}
+
+.users-management-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.users-management-form button,
+.users-management-actions button {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #f97316;
+    color: #fff;
+    font-weight: 600;
+}
+
+.users-management-list {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+    align-items: start;
+}
+
+.users-management-card {
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 10px;
+    background: transparent; /* keep it subtle so it matches previous look */
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.users-management-card h3 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+}
+
+.users-management-card p {
+    margin: 0;
+    color: inherit;
+    font-size: 14px;
+}
+
+.users-management-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.users-management-actions button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+@media (min-width: 768px) {
+    .users-management-list {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+    .users-management-panel {
+        padding: 16px 24px;
+    }
+}

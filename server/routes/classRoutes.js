@@ -1,119 +1,36 @@
 import express from "express";
 import {
-    getAllClasses,
-    registerToClass,
-    getMyClasses,
-    cancelClassRegistration
-} from "../services/classService.js";
+    getAllClassesController,
+    getMyClassesController,
+    registerToClassController,
+    cancelClassRegistrationController,
+    getAllClassesAdminController,
+    createClassController,
+    updateClassController,
+    deleteClassController,
+    getClassParticipantsController,
+    getClassDateCountsController,
+    getClassesByDateController
+} from "../controllers/classController.js";
+
 import { authMiddleware } from "../middlewares/authMiddleware.js";
+import { authorizeRoles } from "../middlewares/roleMiddleware.js";
 
 const router = express.Router();
 
-// Get all classes
-router.get( "/",authMiddleware,async (req, res) => {
+// Member endpoints
+router.get("/", authMiddleware, getAllClassesController);
+router.get("/my", authMiddleware, getMyClassesController);
+router.get("/date-counts", authMiddleware, getClassDateCountsController);
+router.get("/by-date/:date", authMiddleware, getClassesByDateController);
+router.post("/:id/register", authMiddleware, registerToClassController);
+router.delete("/:id/register", authMiddleware, cancelClassRegistrationController);
 
-    try {
-
-        const classes = await getAllClasses(req.user.id);
-
-        res.json(classes);
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).json({
-            message: "Failed to load classes."
-        });
-
-    }
-
-});
-
-router.get(
-    "/my",
-    authMiddleware,
-    async (req, res) => {
-
-        try {
-
-            const classes = await getMyClasses(
-                req.user.id
-            );
-
-            res.json(classes);
-
-        } catch (error) {
-
-            console.error(error);
-
-            res.status(500).json({
-                message: "Failed to load classes."
-            });
-
-        }
-
-    }
-);
-
-
-// Register to class
-router.post(
-    "/:id/register",
-    authMiddleware,
-    async (req, res) => {
-
-        try {
-
-            const classId = req.params.id;
-            const userId = req.user.id;
-
-            await registerToClass(classId, userId);
-
-            res.status(201).json({
-                message: "Registered successfully."
-            });
-
-        } catch (error) {
-
-            console.error(error);
-
-            res.status(500).json({
-                message: "Registration failed."
-            });
-
-        }
-
-    }
-);
-
-router.delete(
-    "/:id/register",
-    authMiddleware,
-    async (req, res) => {
-
-        try {
-
-            await cancelClassRegistration(
-                req.params.id,
-                req.user.id
-            );
-
-            res.json({
-                message: "Registration cancelled."
-            });
-
-        } catch (error) {
-
-            console.error(error);
-
-            res.status(500).json({
-                message: error.message
-            });
-
-        }
-
-    }
-);
+// Admin endpoints
+router.get("/admin", authMiddleware, authorizeRoles("Admin"), getAllClassesAdminController);
+router.post("/admin", authMiddleware, authorizeRoles("Admin"), createClassController);
+router.put("/admin/:id", authMiddleware, authorizeRoles("Admin"), updateClassController);
+router.delete("/admin/:id", authMiddleware, authorizeRoles("Admin"), deleteClassController);
+router.get("/admin/:id/participants", authMiddleware, authorizeRoles("Admin"), getClassParticipantsController);
 
 export default router;

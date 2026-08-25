@@ -54,3 +54,21 @@
 
     border: 2px solid #9333ea;
 }
+
+@media (max-width: 640px) {
+    .topbar {
+        height: auto;
+        min-height: auto;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 16px 20px;
+    }
+
+    .topbar-left h2 {
+        font-size: 1.2rem;
+    }
+
+    .user-info {
+        display: none;
+    }
+}

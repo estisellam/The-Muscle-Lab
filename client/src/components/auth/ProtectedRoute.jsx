@@ -19,7 +19,11 @@ function ProtectedRoute({ children, allowedRoles = [] }) {
     allowedRoles.length > 0 &&
     !allowedRoles.includes(user.role)
   ) {
-    return <Navigate to="/" replace />;
+    if (user.role === "Admin") {
+      return <Navigate to="/admin/dashboard" replace />;
+    }
+
+    return <Navigate to="/member/dashboard" replace />;
   }
 
   return children;
