@@ -1,9 +1,9 @@
 import pool from "../config/db.js";
 
 // get membership by user id
-export async function findMembershipByUserId(userId) {
+export async function findMembershipByUserId(userId, database = pool) {
 
-    const [rows] = await pool.query(
+    const [rows] = await database.query(
         `
         SELECT
             um.id,
@@ -19,6 +19,7 @@ export async function findMembershipByUserId(userId) {
             ON um.membership_plan_id = mp.id
         WHERE um.user_id = ?
         AND um.status = 'Active'
+        AND um.end_date >= CURRENT_DATE
         LIMIT 1
         `,
 
@@ -31,9 +32,9 @@ export async function findMembershipByUserId(userId) {
 }
 
 // create membership
-export async function createUserMembership(membership) {
+export async function createUserMembership(membership, database = pool) {
 
-    await pool.execute(
+    await database.execute(
         `
         INSERT INTO UserMemberships
         (

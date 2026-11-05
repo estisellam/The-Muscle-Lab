@@ -44,7 +44,7 @@ export async function registerToClassController(req, res) {
         res.status(201).json({ message: "Registered successfully." });
 
     } catch (error) {
-        res.status(500).json({ message: "Registration failed." });
+        res.status(error.status || 500).json({ message: error.status ? error.message : "Registration failed." });
     }
 }
 

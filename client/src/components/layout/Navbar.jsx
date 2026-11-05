@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu } from "lucide-react";
 
@@ -7,11 +8,12 @@ import "./Navbar.css";
 import Button from "../ui/Button";
 
 function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const navLinkClass = ({ isActive }) =>
     isActive ? "nav-link nav-link-active" : "nav-link";
 
   return (
-    <header className="navbar">
+    <header className={`navbar ${menuOpen ? "menu-open" : ""}`}>
       <div className="container navbar-container">
         <Link 
           to="/"
@@ -21,7 +23,7 @@ function Navbar() {
           <img src={logo} alt="The Muscle Lab" />
         </Link>
 
-        <nav className="navbar-nav">
+        <nav id="public-navigation" className="navbar-nav" onClick={() => setMenuOpen(false)}>
           <NavLink to="/" end className={navLinkClass}>
             Home
           </NavLink>
@@ -49,7 +51,10 @@ function Navbar() {
 
         <button
           type="button"
-          aria-label="Open navigation menu"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          aria-controls="public-navigation"
+          onClick={() => setMenuOpen(open => !open)}
           className="menu-button"
         >
           <Menu size={23} />

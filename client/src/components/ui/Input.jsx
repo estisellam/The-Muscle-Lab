@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import "./Input.css";
 
@@ -11,6 +11,8 @@ function Input({
 }) {
 
     const [showPassword, setShowPassword] = useState(false);
+    const generatedId = useId();
+    const inputId = props.id || generatedId;
 
     const isPassword = type === "password";
 
@@ -18,7 +20,7 @@ function Input({
         <div className="input-group">
 
             {label && (
-                <label className="input-label">
+                <label className="input-label" htmlFor={inputId}>
                     {label}
                 </label>
             )}
@@ -27,6 +29,7 @@ function Input({
 
                 <input
                     {...props}
+                    id={inputId}
                     type={isPassword && showPassword ? "text" : type}
                     className={`input-field ${isPassword ? "password-input" : ""} ${className}`}
                 />
@@ -35,6 +38,7 @@ function Input({
                     <button
                         type="button"
                         className="show-password-btn"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
                         onClick={() => setShowPassword(prev => !prev)}
                     >
                         {showPassword ? (

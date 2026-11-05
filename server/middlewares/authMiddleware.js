@@ -5,19 +5,11 @@ export function authMiddleware(req, res, next) {
 
     const authHeader = req.headers.authorization;
 
-    if (!authHeader) {
-        return res.status(401).json({
-            message: "access denied"
-        });
+    const match = typeof authHeader === "string" && /^Bearer\s+(\S+)$/i.exec(authHeader);
+    if (!match) {
+        return res.status(401).json({ message: "access denied" });
     }
-
-    const token = authHeader.split(" ")[1];
-
-    if (!token) {
-        return res.status(401).json({
-            message: "access denied"
-        });
-    }
+    const token = match[1];
 
     try {
 

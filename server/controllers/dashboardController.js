@@ -7,7 +7,7 @@ export async function getAdminDashboardOverview(req, res) {
         );
 
         const [activeMembershipsResult] = await pool.execute(
-            `SELECT COUNT(*) AS count FROM UserMemberships WHERE status = 'Active'`
+            `SELECT COUNT(*) AS count FROM UserMemberships WHERE status = 'Active' AND end_date >= CURRENT_DATE`
         );
 
         const [classesResult] = await pool.execute(

@@ -1,15 +1,9 @@
 import { Navigate } from "react-router-dom";
+import { getToken, getCurrentUser } from "../../services/authService";
 
 function ProtectedRoute({ children, allowedRoles = [] }) {
-  const token =
-    localStorage.getItem("token") ||
-    sessionStorage.getItem("token");
-
-  const userData =
-    localStorage.getItem("user") ||
-    sessionStorage.getItem("user");
-
-  const user = userData ? JSON.parse(userData) : null;
+  const token = getToken();
+  const user = getCurrentUser();
 
   if (!token || !user) {
     return <Navigate to="/login" replace />;
@@ -23,7 +17,7 @@ function ProtectedRoute({ children, allowedRoles = [] }) {
       return <Navigate to="/admin/dashboard" replace />;
     }
 
-    return <Navigate to="/member/dashboard" replace />;
+    return <Navigate to={user.role === "Member" ? "/member/dashboard" : "/"} replace />;
   }
 
   return children;

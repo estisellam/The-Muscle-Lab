@@ -1,3 +1,4 @@
+import { profileImageUrl } from "../../services/config";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "../../context/UserContext";
@@ -113,7 +114,7 @@ function Profile() {
 
         try {
 
-            const response = await uploadProfileImage(file);
+            await uploadProfileImage(file);
 
             await refreshUser();
             const profile = await getProfile();
@@ -136,7 +137,7 @@ function Profile() {
 
         try {
 
-            const response = await updateProfile(user);
+            await updateProfile(user);
 
             await refreshUser();
             const profile = await getProfile();
@@ -334,9 +335,7 @@ function Profile() {
                     <img
                         className="profile-avatar"
                         src={
-                            user.profile_image
-                                ? `http://localhost:3000${user.profile_image}`
-                                : "https://ui-avatars.com/api/?name=User"
+                            profileImageUrl(user.profile_image)
                         }
                         alt="Profile"
                     />

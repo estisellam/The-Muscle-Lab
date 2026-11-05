@@ -9,16 +9,18 @@ import {
     FiBarChart2,
 } from "react-icons/fi";
 
-import { logout } from "../../services/authService";
+import { logout, getCurrentUser } from "../../services/authService";
 
 import logo from "../../assets/logos/logo.png";
 
 import "./Sidebar.css";
+import { useUser } from "../../context/UserContext";
 
 function Sidebar() {
 
     const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user") || "null");
+    const { setUser } = useUser();
+    const user = getCurrentUser();
 
     const linkClass = ({ isActive }) =>
         isActive
@@ -28,6 +30,7 @@ function Sidebar() {
     function handleLogout() {
 
         logout();
+        setUser(null);
 
         navigate("/login");
 

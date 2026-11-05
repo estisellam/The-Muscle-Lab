@@ -20,9 +20,9 @@ export async function getAllMembershipPlans() {
 }
 
 // find membership plan by id
-export async function findMembershipPlanById(id) {
+export async function findMembershipPlanById(id, database = pool) {
 
-    const [rows] = await pool.execute(
+    const [rows] = await database.execute(
         `
         SELECT
             id,

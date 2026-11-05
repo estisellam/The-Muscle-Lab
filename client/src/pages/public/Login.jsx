@@ -10,10 +10,12 @@ import {
 } from "../../services/authService";
 
 import "./Login.css";
+import { useUser } from "../../context/UserContext";
 
 function Login() {
 
     const navigate = useNavigate();
+    const { refreshUser } = useUser();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -50,6 +52,7 @@ function Login() {
                 user,
                 rememberMe
             );
+            await refreshUser();
 
             if (user.role === "Admin") {
 

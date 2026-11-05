@@ -561,7 +561,7 @@ function Membership() {
 
                         const isCurrentPlan =
 
-                            currentMembership?.plan_id ===
+                            currentMembership?.membership_plan_id ===
                                 plan.id &&
 
                             currentMembership?.status ===

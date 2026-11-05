@@ -127,76 +127,89 @@ export async function getMyClasses(userId) {
 }
 
 export async function registerToClass(classId, userId) {
-    const [classRows] = await pool.execute(
-        `SELECT id, capacity FROM Classes WHERE id = ?`,
-        [classId]
-    );
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
 
-    const gymClass = classRows[0];
-
-    if (!gymClass) {
-        throw new Error("Class not found.");
-    }
-
-    const [registeredRows] = await pool.execute(
-        `
-        SELECT COUNT(*) AS count
-        FROM ClassRegistrations
-        WHERE class_id = ?
-          AND status = 'Registered'
-        `,
-        [classId]
-    );
-
-    if (registeredRows[0].count >= gymClass.capacity) {
-        throw new Error("Class is full.");
-    }
-
-    const [existingRows] = await pool.execute(
-        `
-        SELECT id, status
-        FROM ClassRegistrations
-        WHERE class_id = ?
-          AND user_id = ?
-        `,
-        [classId, userId]
-    );
-
-    if (existingRows.length > 0) {
-        const existing = existingRows[0];
-        if (existing.status === "Registered") {
-            throw new Error("You are already registered for this class.");
-        }
-
-        await pool.execute(
-            `
-            UPDATE ClassRegistrations
-            SET status = 'Registered', registration_date = CURRENT_TIMESTAMP
-            WHERE id = ?
-            `,
-            [existing.id]
+        const [classRows] = await connection.execute(
+            `SELECT id, capacity FROM Classes WHERE id = ? FOR UPDATE`,
+            [classId]
         );
 
-        return;
-    }
+        const gymClass = classRows[0];
 
-    await pool.execute(
-        `
-        INSERT INTO ClassRegistrations
-        (
-            class_id,
-            user_id,
-            status
-        )
-        VALUES
-        (
-            ?,
-            ?,
-            'Registered'
-        )
-        `,
-        [classId, userId]
-    );
+        if (!gymClass) {
+            throw Object.assign(new Error("Class not found."), { status: 404 });
+        }
+
+        const [registeredRows] = await connection.execute(
+            `
+            SELECT COUNT(*) AS count
+            FROM ClassRegistrations
+            WHERE class_id = ?
+              AND status = 'Registered'
+            `,
+            [classId]
+        );
+
+        if (registeredRows[0].count >= gymClass.capacity) {
+            throw Object.assign(new Error("Class is full."), { status: 409 });
+        }
+
+        const [existingRows] = await connection.execute(
+            `
+            SELECT id, status
+            FROM ClassRegistrations
+            WHERE class_id = ?
+              AND user_id = ?
+            `,
+            [classId, userId]
+        );
+
+        if (existingRows.length > 0) {
+            const existing = existingRows[0];
+            if (existing.status === "Registered") {
+                throw Object.assign(new Error("You are already registered for this class."), { status: 409 });
+            }
+
+            await connection.execute(
+                `
+                UPDATE ClassRegistrations
+                SET status = 'Registered', registration_date = CURRENT_TIMESTAMP
+                WHERE id = ?
+                `,
+                [existing.id]
+            );
+
+            await connection.commit();
+            return;
+        }
+
+        await connection.execute(
+            `
+            INSERT INTO ClassRegistrations
+            (
+                class_id,
+                user_id,
+                status
+            )
+            VALUES
+            (
+                ?,
+                ?,
+                'Registered'
+            )
+            `,
+            [classId, userId]
+        );
+
+        await connection.commit();
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
 }
 
 export async function cancelClassRegistration(classId, userId) {
@@ -294,10 +307,23 @@ export async function findClassById(id) {
     return rows[0];
 }
 
-export async function createClass(gymClass) {
-    if (!gymClass.trainer_id || !gymClass.title || !gymClass.class_date || !gymClass.start_time || !gymClass.end_time || !gymClass.capacity) {
-        throw new Error("Missing required class fields.");
+function validateClass(gymClass) {
+    if (!gymClass.trainer_id || typeof gymClass.title !== "string" || !gymClass.title.trim() ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(gymClass.class_date || "") ||
+        !/^(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(gymClass.start_time || "") ||
+        !/^(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(gymClass.end_time || "") ||
+        !Number.isInteger(Number(gymClass.capacity)) || Number(gymClass.capacity) <= 0) {
+        throw new Error("A trainer, title, valid schedule, and positive integer capacity are required.");
     }
+    const date = new Date(`${gymClass.class_date}T00:00:00Z`);
+    if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== gymClass.class_date ||
+        gymClass.end_time.padEnd(8, ":00") <= gymClass.start_time.padEnd(8, ":00")) {
+        throw new Error("Class date must be valid and end time must be after start time.");
+    }
+}
+
+export async function createClass(gymClass) {
+    validateClass(gymClass);
 
     await pool.execute(
         `
@@ -331,6 +357,7 @@ export async function createClass(gymClass) {
 }
 
 export async function updateClass(id, gymClass) {
+    validateClass(gymClass);
     const [result] = await pool.execute(
         `
         UPDATE Classes

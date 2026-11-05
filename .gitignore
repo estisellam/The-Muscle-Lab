@@ -144,3 +144,24 @@ vite.config.ts.timestamp-*
 
 node_modules
 .env
+
+# Local artifacts
+.DS_Store
+build/
+dist/
+server/uploads/
+.idea/
+.vscode/
+playwright-report/
+test-results/
+
+# Private publication inputs and assistant process reports
+/screenshots-to-review/
+/docs/AUDIT.md
+/docs/FOLLOWUP.md
+
+# Diagnostic captures; only the five reviewed gallery images are published
+/docs/screenshots/login.png
+/docs/screenshots/member-dashboard.png
+/docs/screenshots/admin-panel.png
+/docs/screenshots/calendar.png
