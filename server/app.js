@@ -8,6 +8,8 @@ import authRoutes from "./routes/authRoutes.js";
 import membershipPlanRoutes from "./routes/membershipPlanRoutes.js";
 import userMembershipRoutes from "./routes/userMembershipRoutes.js";
 import classRoutes from "./routes/classRoutes.js";
+import trainerRoutes from "./routes/trainerRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 dotenv.config();
 
@@ -42,4 +44,6 @@ app.use(
     "/api/classes",
     classRoutes
 );
+app.use("/api/trainers", trainerRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 export default app;

@@ -90,6 +90,20 @@ export async function getMyClasses() {
 
 }
 
+export async function getClassDateCounts(start, end) {
+
+    return await apiRequest(
+        `/classes/date-counts?start=${start}&end=${end}`
+    );
+
+}
+
+export async function getClassesByDate(date) {
+
+    return await apiRequest(`/classes/by-date/${date}`);
+
+}
+
 export async function cancelClassRegistration(classId) {
 
     return await apiRequest(

@@ -30,7 +30,7 @@ SELECT
     'Admin',
     'User',
     'admin@musclelab.com',
-    'admin123',
+    '$2b$10$4Pzxp0CoAinHhjTp8DxnUO2usj0btT2OrL8/8kcze3snF9pdL1y5O',
     '0501111111',
     '1995-01-01',
     'Male'
@@ -52,7 +52,7 @@ SELECT
     'John',
     'Trainer',
     'trainer@musclelab.com',
-    'trainer123',
+    '$2b$10$34/Dfn3QCIsngelJOABpHO8WoKCt1cO2gtx.h2E9MnRfzcIknt.42',
     '0502222222',
     '1992-06-10',
     'Male'
@@ -74,7 +74,7 @@ SELECT
     'Sarah',
     'Cohen',
     'sarah@example.com',
-    'member123',
+    '$2b$10$lOU4/FAAbW3gsbpBN1UfkeJsYCqkvDtXvbKR74C76uSIY44cEq08K',
     '0503333333',
     '2000-03-15',
     'Female'
@@ -96,7 +96,7 @@ SELECT
     'David',
     'Levi',
     'david@example.com',
-    'member123',
+    '$2b$10$lOU4/FAAbW3gsbpBN1UfkeJsYCqkvDtXvbKR74C76uSIY44cEq08K',
     '0504444444',
     '1998-08-20',
     'Male'
@@ -342,6 +342,98 @@ SELECT
     '20:00:00',
     'Studio B',
     16
+FROM Trainers t
+JOIN Users u ON t.user_id = u.id
+WHERE u.email = 'trainer@musclelab.com';
+
+INSERT INTO Classes (
+    trainer_id,
+    title,
+    description,
+    class_date,
+    start_time,
+    end_time,
+    room,
+    capacity
+)
+SELECT
+    t.id,
+    'Strength Builder',
+    'Full body strength session',
+    '2026-08-06',
+    '17:30:00',
+    '18:30:00',
+    'Studio D',
+    22
+FROM Trainers t
+JOIN Users u ON t.user_id = u.id
+WHERE u.email = 'trainer@musclelab.com';
+
+INSERT INTO Classes (
+    trainer_id,
+    title,
+    description,
+    class_date,
+    start_time,
+    end_time,
+    room,
+    capacity
+)
+SELECT
+    t.id,
+    'Mobility Flow',
+    'Recovery and mobility class',
+    '2026-08-07',
+    '08:30:00',
+    '09:30:00',
+    'Studio A',
+    14
+FROM Trainers t
+JOIN Users u ON t.user_id = u.id
+WHERE u.email = 'trainer@musclelab.com';
+
+INSERT INTO Classes (
+    trainer_id,
+    title,
+    description,
+    class_date,
+    start_time,
+    end_time,
+    room,
+    capacity
+)
+SELECT
+    t.id,
+    'Boxing Blast',
+    'Cardio boxing circuit',
+    '2026-08-08',
+    '20:00:00',
+    '21:00:00',
+    'Studio C',
+    18
+FROM Trainers t
+JOIN Users u ON t.user_id = u.id
+WHERE u.email = 'trainer@musclelab.com';
+
+INSERT INTO Classes (
+    trainer_id,
+    title,
+    description,
+    class_date,
+    start_time,
+    end_time,
+    room,
+    capacity
+)
+SELECT
+    t.id,
+    'Core Sculpt',
+    'Focused core and posture workout',
+    '2026-08-09',
+    '12:00:00',
+    '13:00:00',
+    'Studio B',
+    12
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
 WHERE u.email = 'trainer@musclelab.com';

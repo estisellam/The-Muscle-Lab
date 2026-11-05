@@ -19,10 +19,14 @@ import ForgotPassword from "../pages/public/ForgotPassword";
 import Dashboard from "../pages/member/Dashboard";
 import Profile from "../pages/member/Profile";
 import MyMembership from "../pages/member/MyMembership";
+import CalendarPage from "../pages/member/Calendar";
 
 // Admin Pages
 import UsersManagement from "../pages/admin/UsersManagement";
 import MembershipManagement from "../pages/admin/MembershipManagement";
+import TrainersManagement from "../pages/admin/TrainersManagement";
+import ClassesManagement from "../pages/admin/ClassesManagement";
+import AdminDashboard from "../pages/admin/AdminDashboard";
 
 //classes page
 import Classes from "../pages/Classes/Classes";
@@ -73,6 +77,11 @@ function AppRoutes() {
                     path="/member/classes"
                     element={<Classes />}
                 />
+
+                <Route
+                    path="/member/calendar"
+                    element={<CalendarPage />}
+                />
             </Route>
 
 
@@ -84,6 +93,11 @@ function AppRoutes() {
                 }
             >
                 <Route
+                    path="/admin/dashboard"
+                    element={<AdminDashboard />}
+                />
+
+                <Route
                     path="/admin/users"
                     element={<UsersManagement />}
                 />
@@ -91,6 +105,16 @@ function AppRoutes() {
                 <Route
                     path="/admin/memberships"
                     element={<MembershipManagement />}
+                />
+
+                <Route
+                    path="/admin/trainers"
+                    element={<TrainersManagement />}
+                />
+
+                <Route
+                    path="/admin/classes"
+                    element={<ClassesManagement />}
                 />
             </Route>
 

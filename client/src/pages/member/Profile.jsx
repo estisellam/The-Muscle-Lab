@@ -276,7 +276,7 @@ function Profile() {
                     <Input
                         label="Phone"
                         name="phone"
-                        value={user.phone}
+                        value={user.phone || ""}
                         onChange={handleInputChange}
                     />
 
