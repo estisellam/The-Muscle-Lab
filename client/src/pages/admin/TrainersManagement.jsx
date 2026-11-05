@@ -4,6 +4,8 @@ import "./UsersManagement.css";
 
 function TrainersManagement() {
     const [trainers, setTrainers] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [loadError, setLoadError] = useState("");
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState({
         user_id: "",
@@ -18,11 +20,17 @@ function TrainersManagement() {
     }, []);
 
     async function loadTrainers() {
+        setLoading(true);
+        setLoadError("");
         try {
-            const data = await apiRequest("/trainers");
-            setTrainers(data);
+            const [trainerData, userData] = await Promise.all([
+                apiRequest("/trainers"),
+                apiRequest("/users")
+            ]);
+            setTrainers(trainerData);
+            setUsers(userData);
         } catch (error) {
-            console.error(error);
+            setLoadError(error.message || "Unable to load trainers and users. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -87,19 +95,35 @@ function TrainersManagement() {
         }
     }
 
+    const availableUsers = users.filter(user =>
+        user.id === form.user_id || !trainers.some(trainer => trainer.user_id === user.id)
+    );
+
     return (
         <div className="users-management-page">
             <div className="users-management-panel">
                 <h1 className="users-management-title">Trainers Management</h1>
 
                 <form onSubmit={handleSubmit} className="users-management-form">
-                    <input
-                        name="user_id"
-                        value={form.user_id}
-                        onChange={handleChange}
-                        placeholder="User ID"
-                        required={!editingId}
-                    />
+                    <div className="admin-select-field">
+                        <label htmlFor="trainer-user-select">User</label>
+                        <select
+                            id="trainer-user-select"
+                            name="user_id"
+                            value={form.user_id}
+                            onChange={handleChange}
+                            disabled={loading || Boolean(editingId)}
+                            required
+                        >
+                            <option value="">Select a user</option>
+                            {availableUsers.map(user => (
+                                <option key={user.id} value={user.id}>
+                                    {user.first_name} {user.last_name} — {user.email}
+                                </option>
+                            ))}
+                        </select>
+                        {editingId && <small>The linked user cannot be changed.</small>}
+                    </div>
                     <input
                         name="specialization"
                         value={form.specialization}
@@ -119,7 +143,7 @@ function TrainersManagement() {
                         onChange={handleChange}
                         placeholder="Biography"
                     />
-                    <button type="submit">{editingId ? "Save Changes" : "Add Trainer"}</button>
+                    <button type="submit" disabled={loading || Boolean(loadError) || (!editingId && availableUsers.length === 0)}>{editingId ? "Save Changes" : "Add Trainer"}</button>
                     {editingId ? (
                         <button type="button" onClick={() => {
                             setEditingId(null);
@@ -129,6 +153,16 @@ function TrainersManagement() {
                         </button>
                     ) : null}
                 </form>
+
+                {loadError && (
+                    <div role="alert" className="admin-load-error">
+                        <p>{loadError}</p>
+                        <button type="button" onClick={loadTrainers}>Retry</button>
+                    </div>
+                )}
+                {!loading && !loadError && !editingId && availableUsers.length === 0 && (
+                    <p>No users are available. Register a user first, or edit an existing trainer.</p>
+                )}
 
                 {loading ? (
                     <p>Loading trainers...</p>

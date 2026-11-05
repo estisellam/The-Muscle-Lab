@@ -32,7 +32,7 @@ function AdminDashboard() {
     }, []);
 
     const cards = useMemo(() => [
-        { title: "Members", value: stats.memberCount, icon: Users },
+        { title: "Users", value: stats.memberCount, icon: Users },
         { title: "Active memberships", value: stats.activeMembershipCount, icon: CreditCard },
         { title: "Scheduled classes", value: stats.classCount, icon: CalendarDays },
         { title: "Live registrations", value: stats.registrationCount, icon: TrendingUp }
@@ -49,7 +49,7 @@ function AdminDashboard() {
                     <p className="admin-dashboard-eyebrow">Operations center</p>
                     <h1>Admin intelligence dashboard</h1>
                 </div>
-                <div className="admin-dashboard-chip">Live overview</div>
+                <div className="admin-dashboard-chip">Overview on page load</div>
             </div>
 
             <div className="admin-dashboard-grid">
@@ -71,10 +71,10 @@ function AdminDashboard() {
                     <BarChart3 size={18} />
                     <h2>Performance snapshot</h2>
                 </div>
-                <p>Track demand, retention and participation in real time from the admin view.</p>
+                <p>Counts and participation indicators from the current database snapshot.</p>
                 <div className="admin-dashboard-bars">
                     <div className="admin-bar-item">
-                        <label>Member growth</label>
+                        <label>User target (40 users)</label>
                         <div className="admin-bar-track"><div style={{ width: `${stats.memberGrowth}%` }} /></div>
                     </div>
                     <div className="admin-bar-item">
@@ -82,7 +82,7 @@ function AdminDashboard() {
                         <div className="admin-bar-track"><div style={{ width: `${stats.avgAttendance}%` }} /></div>
                     </div>
                     <div className="admin-bar-item">
-                        <label>Membership renewals</label>
+                        <label>Active memberships / users</label>
                         <div className="admin-bar-track"><div style={{ width: `${stats.renewalRate}%` }} /></div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@ function AdminDashboard() {
                         <Sparkles size={16} />
                         <h3>Recent activity</h3>
                     </div>
-                    <span>Updated live</span>
+                    <span>Loaded with this page</span>
                 </div>
                 <ul>
                     {stats.recentActivity.map((item, index) => (

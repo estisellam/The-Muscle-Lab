@@ -1,3 +1,4 @@
+import { profileImageUrl } from "../../services/config";
 import "./TopBar.css";
 
 function TopBar({
@@ -20,10 +21,7 @@ function TopBar({
 
     }
 
-    const profileImage = image
-        ? `http://localhost:3000${image}`
-        : "https://ui-avatars.com/api/?name=" +
-          encodeURIComponent(name);
+    const profileImage = profileImageUrl(image);
 
     return (
 

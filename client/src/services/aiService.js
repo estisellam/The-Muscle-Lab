@@ -1,4 +1,4 @@
-const DEFAULT_AI_URL = import.meta.env.VITE_AI_API_URL;
+const DEFAULT_AI_URL = import.meta.env?.VITE_AI_API_URL;
 
 function buildLocalInsight({ user, membership, myClasses = [], availableClasses = [] }) {
     const firstName = user?.first_name || user?.firstName || "there";

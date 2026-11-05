@@ -4,6 +4,8 @@ import "./UsersManagement.css";
 
 function ClassesManagement() {
     const [classes, setClasses] = useState([]);
+    const [trainers, setTrainers] = useState([]);
+    const [loadError, setLoadError] = useState("");
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState({
         trainer_id: "",
@@ -22,11 +24,17 @@ function ClassesManagement() {
     }, []);
 
     async function loadClasses() {
+        setLoading(true);
+        setLoadError("");
         try {
-            const data = await apiRequest("/classes/admin");
-            setClasses(data);
+            const [classData, trainerData] = await Promise.all([
+                apiRequest("/classes/admin"),
+                apiRequest("/trainers")
+            ]);
+            setClasses(classData);
+            setTrainers(trainerData);
         } catch (error) {
-            console.error(error);
+            setLoadError(error.message || "Unable to load classes and trainers. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -98,7 +106,17 @@ function ClassesManagement() {
                 <h1 className="users-management-title">Classes Management</h1>
 
                 <form onSubmit={handleSubmit} className="users-management-form">
-                    <input name="trainer_id" value={form.trainer_id} onChange={handleChange} placeholder="Trainer ID" required />
+                    <div className="admin-select-field">
+                        <label htmlFor="class-trainer-select">Trainer</label>
+                        <select id="class-trainer-select" name="trainer_id" value={form.trainer_id} onChange={handleChange} disabled={loading} required>
+                            <option value="">Select a trainer</option>
+                            {trainers.map(trainer => (
+                                <option key={trainer.id} value={trainer.id}>
+                                    {trainer.first_name} {trainer.last_name}{trainer.specialization ? ` — ${trainer.specialization}` : ""}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <input name="title" value={form.title} onChange={handleChange} placeholder="Title" required />
                     <input name="class_date" value={form.class_date} onChange={handleChange} placeholder="Date (YYYY-MM-DD)" required />
                     <input name="start_time" value={form.start_time} onChange={handleChange} placeholder="Start Time (HH:MM)" required />
@@ -106,11 +124,19 @@ function ClassesManagement() {
                     <input name="room" value={form.room} onChange={handleChange} placeholder="Room" />
                     <input name="capacity" type="number" value={form.capacity} onChange={handleChange} placeholder="Capacity" />
                     <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" />
-                    <button type="submit">{editingId ? "Save Changes" : "Add Class"}</button>
+                    <button type="submit" disabled={loading || Boolean(loadError) || trainers.length === 0}>{editingId ? "Save Changes" : "Add Class"}</button>
                     {editingId ? (
                         <button type="button" onClick={() => { setEditingId(null); setForm({ trainer_id: "", title: "", description: "", class_date: "", start_time: "", end_time: "", room: "", capacity: "" }); }}>Cancel</button>
                     ) : null}
                 </form>
+
+                {loadError && (
+                    <div role="alert" className="admin-load-error">
+                        <p>{loadError}</p>
+                        <button type="button" onClick={loadClasses}>Retry</button>
+                    </div>
+                )}
+                {!loading && !loadError && trainers.length === 0 && <p>Add a trainer before creating a class.</p>}
 
                 {loading ? (
                     <p>Loading classes...</p>

@@ -1,4 +1,4 @@
-import apiRequest from "./api";
+import apiRequest from "./api.js";
 
 // login
 export async function login(credentials) {
@@ -44,9 +44,11 @@ export function getCurrentUser() {
         localStorage.getItem("user") ||
         sessionStorage.getItem("user");
 
-    return user
-        ? JSON.parse(user)
-        : null;
+    try {
+        return user ? JSON.parse(user) : null;
+    } catch {
+        return null;
+    }
 
 }
 
@@ -66,6 +68,9 @@ export function saveLogin(
     user,
     rememberMe
 ) {
+
+    // A previous persistent login must not override the next session login.
+    logout();
 
     if (rememberMe) {
 

@@ -45,10 +45,10 @@ export async function updateUserProfile(id, userData) {
             userData.phone ?? currentUser.phone,
 
         birth_date:
-            userData.birth_date ?? currentUser.birth_date,
+            (userData.birth_date ?? currentUser.birth_date) || null,
 
         gender:
-            userData.gender ?? currentUser.gender,
+            (userData.gender ?? currentUser.gender) || null,
 
         profile_image:
             userData.profile_image ?? currentUser.profile_image
@@ -72,7 +72,7 @@ export async function changeUserPassword(
         );
     }
 
-    if (newPassword.length < 6) {
+    if (typeof newPassword !== "string" || newPassword.length < 6 || Buffer.byteLength(newPassword) > 72) {
         throw new Error(
             "new password must contain at least 6 characters"
         );

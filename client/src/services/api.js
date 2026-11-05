@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api";
+import { API_BASE_URL as BASE_URL } from "./config.js";
 
 async function apiRequest(
     endpoint,
@@ -33,21 +33,15 @@ async function apiRequest(
         }
     );
 
-    if (response.status === 401) {
+    const data = await response.json().catch(() => ({}));
 
+    if (response.status === 401 && !endpoint.startsWith("/auth/")) {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
-
         window.location.href = "/login";
-
-        return;
-
     }
-
-    const data = await response.json();
 
     if (!response.ok) {
 

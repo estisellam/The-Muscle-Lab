@@ -13,6 +13,14 @@ import { generateToken } from "../utils/generateToken.js";
 // register new user
 export async function register(user) {
 
+    if (!user || typeof user.first_name !== "string" || !user.first_name.trim() ||
+        typeof user.last_name !== "string" || !user.last_name.trim() ||
+        typeof user.email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email) ||
+        typeof user.password !== "string" || user.password.length < 6 ||
+        Buffer.byteLength(user.password) > 72) {
+        throw new Error("Valid names, email, and a password of at least 6 characters (at most 72 bytes) are required");
+    }
+
     const existingUser = await findUserByEmail(user.email);
 
     if (existingUser) {
@@ -34,6 +42,10 @@ export async function register(user) {
 
 // login existing user
 export async function login(email, password) {
+
+    if (typeof email !== "string" || typeof password !== "string" || !password) {
+        throw new Error("invalid email or password");
+    }
 
     const user = await findUserByEmail(email);
 

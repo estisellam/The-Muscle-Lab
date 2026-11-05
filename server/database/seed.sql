@@ -1,3 +1,9 @@
+-- FICTIONAL LOCAL DEVELOPMENT DATA ONLY. Never import these accounts into production.
+-- All identities and activity records below are demo fixtures, not real people or transactions.
+-- Contact numbers, birth dates, and gender are intentionally NULL.
+-- Public demo password for all four accounts: Local-demo-only-2026!
+-- The bcrypt verifiers below were generated solely for this public development fixture.
+
 USE the_muscle_lab;
 
 -- Roles
@@ -27,13 +33,13 @@ INSERT INTO Users (
 )
 SELECT
     id,
+    'Demo',
     'Admin',
-    'User',
-    'admin@musclelab.com',
-    '$2b$10$4Pzxp0CoAinHhjTp8DxnUO2usj0btT2OrL8/8kcze3snF9pdL1y5O',
-    '0501111111',
-    '1995-01-01',
-    'Male'
+    'demo-admin@example.com',
+    '$2b$10$iF/BTohHPOBtEBqdOM.WpeXuHgHqzOhb2JD86hZLUCIThwCa6GRa.',
+    NULL,
+    NULL,
+    NULL
 FROM Roles
 WHERE name = 'Admin';
 
@@ -49,13 +55,13 @@ INSERT INTO Users (
 )
 SELECT
     id,
-    'John',
+    'Demo',
     'Trainer',
-    'trainer@musclelab.com',
-    '$2b$10$34/Dfn3QCIsngelJOABpHO8WoKCt1cO2gtx.h2E9MnRfzcIknt.42',
-    '0502222222',
-    '1992-06-10',
-    'Male'
+    'demo-trainer@example.com',
+    '$2b$10$ERfSc4R.F.7PUlbvHG5AFeANsG.1PHeit1nqt6qfvj2Wr/y73Z0Fm',
+    NULL,
+    NULL,
+    NULL
 FROM Roles
 WHERE name = 'Trainer';
 
@@ -71,13 +77,13 @@ INSERT INTO Users (
 )
 SELECT
     id,
-    'Sarah',
-    'Cohen',
-    'sarah@example.com',
-    '$2b$10$lOU4/FAAbW3gsbpBN1UfkeJsYCqkvDtXvbKR74C76uSIY44cEq08K',
-    '0503333333',
-    '2000-03-15',
-    'Female'
+    'Demo',
+    'Member One',
+    'demo-member-one@example.com',
+    '$2b$10$NqMXuhYFsN2Yh4ivRjK9LOSab5GwKfJL/Uzz7x2lzVux4EpAgex9i',
+    NULL,
+    NULL,
+    NULL
 FROM Roles
 WHERE name = 'Member';
 
@@ -93,13 +99,13 @@ INSERT INTO Users (
 )
 SELECT
     id,
-    'David',
-    'Levi',
-    'david@example.com',
-    '$2b$10$lOU4/FAAbW3gsbpBN1UfkeJsYCqkvDtXvbKR74C76uSIY44cEq08K',
-    '0504444444',
-    '1998-08-20',
-    'Male'
+    'Demo',
+    'Member Two',
+    'demo-member-two@example.com',
+    '$2b$10$dYg8g7DLbEaPz/59HHapn.sl93QBSgAtyNj5aEw1ih1obzhAWSLBa',
+    NULL,
+    NULL,
+    NULL
 FROM Roles
 WHERE name = 'Member';
 
@@ -116,7 +122,7 @@ SELECT
     8,
     'Certified personal trainer'
 FROM Users
-WHERE email = 'trainer@musclelab.com';
+WHERE email = 'demo-trainer@example.com';
 
 -- Classes
 INSERT INTO Classes (
@@ -140,7 +146,7 @@ SELECT
     20
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 INSERT INTO Classes (
     trainer_id,
@@ -163,7 +169,7 @@ SELECT
     15
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 -- User memberships
 INSERT INTO UserMemberships (
@@ -181,7 +187,7 @@ SELECT
     'Active'
 FROM Users u
 JOIN MembershipPlans m
-WHERE u.email = 'sarah@example.com'
+WHERE u.email = 'demo-member-one@example.com'
 AND m.name = 'Basic';
 
 INSERT INTO UserMemberships (
@@ -199,7 +205,7 @@ SELECT
     'Active'
 FROM Users u
 JOIN MembershipPlans m
-WHERE u.email = 'david@example.com'
+WHERE u.email = 'demo-member-two@example.com'
 AND m.name = 'Premium';
 
 -- Class registrations
@@ -213,7 +219,7 @@ SELECT
 FROM Classes c
 JOIN Users u
 WHERE c.title = 'HIIT'
-AND u.email = 'sarah@example.com';
+AND u.email = 'demo-member-one@example.com';
 
 INSERT INTO ClassRegistrations (
     class_id,
@@ -225,7 +231,7 @@ SELECT
 FROM Classes c
 JOIN Users u
 WHERE c.title = 'Yoga'
-AND u.email = 'david@example.com';
+AND u.email = 'demo-member-two@example.com';
 
 -- Attendance
 INSERT INTO Attendance (
@@ -258,8 +264,8 @@ SELECT
 FROM Trainers t
 JOIN Users trainerUser ON t.user_id = trainerUser.id
 JOIN Users u
-WHERE trainerUser.email = 'trainer@musclelab.com'
-AND u.email = 'sarah@example.com';
+WHERE trainerUser.email = 'demo-trainer@example.com'
+AND u.email = 'demo-member-one@example.com';
 
 -- Payments
 INSERT INTO Payments (
@@ -298,7 +304,7 @@ SELECT
     18
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 INSERT INTO Classes (
     trainer_id,
@@ -321,7 +327,7 @@ SELECT
     20
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 INSERT INTO Classes (
     trainer_id,
@@ -344,7 +350,7 @@ SELECT
     16
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 INSERT INTO Classes (
     trainer_id,
@@ -367,7 +373,7 @@ SELECT
     22
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 INSERT INTO Classes (
     trainer_id,
@@ -390,7 +396,7 @@ SELECT
     14
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 INSERT INTO Classes (
     trainer_id,
@@ -413,7 +419,7 @@ SELECT
     18
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';
 
 INSERT INTO Classes (
     trainer_id,
@@ -436,4 +442,4 @@ SELECT
     12
 FROM Trainers t
 JOIN Users u ON t.user_id = u.id
-WHERE u.email = 'trainer@musclelab.com';
+WHERE u.email = 'demo-trainer@example.com';

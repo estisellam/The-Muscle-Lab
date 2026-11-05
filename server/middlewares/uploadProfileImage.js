@@ -1,21 +1,26 @@
 import multer from "multer";
-import { v4 as uuid } from "uuid";
-import path from "path";
+import { randomUUID } from "node:crypto";
+import { mkdirSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+const uploadDirectory = fileURLToPath(new URL("../uploads/profile-images/", import.meta.url));
+mkdirSync(uploadDirectory, { recursive: true });
+const extensions = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp" };
 
 const storage = multer.diskStorage({
 
     destination(req, file, cb) {
 
-        cb(null, "uploads/profile-images");
+        cb(null, uploadDirectory);
     },
 
     filename(req, file, cb) {
 
-        const extension = path.extname(file.originalname);
+        const extension = extensions[file.mimetype];
 
         cb(
             null,
-            uuid() + extension
+            randomUUID() + extension
         );
     }
 
@@ -33,10 +38,7 @@ function fileFilter(req, file, cb) {
 
     } else {
 
-        cb(
-            new Error("only image files are allowed"),
-            false
-        );
+        cb(Object.assign(new Error("only image files are allowed"), { status: 400 }), false);
 
     }
 

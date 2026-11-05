@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import {
     CalendarDays,
     CreditCard,
-    Dumbbell,
     Flame,
     Trophy,
-    User,
     ArrowRight
 } from "lucide-react";
 
@@ -111,21 +109,19 @@ function Dashboard() {
 
     }
 
-    const firstName =
-        user?.first_name ||
-        user?.firstName ||
-        "Member";
-
-    const nextClass =
-        myClasses.length > 0
-            ? myClasses[0]
-            : null;
+    const today = new Date();
+    const upcomingClasses = myClasses.filter(gymClass => new Date(`${gymClass.class_date}T${gymClass.end_time}`) >= today);
+    const monthlyCount = myClasses.filter(gymClass => {
+        const date = new Date(`${gymClass.class_date}T00:00:00`);
+        return date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+    }).length;
+    const nextClass = upcomingClasses[0] || null;
 
     const goal = 10;
 
     const progress =
         Math.min(
-            (myClasses.length / goal) * 100,
+            (monthlyCount / goal) * 100,
             100
         );
 
@@ -247,7 +243,7 @@ function Dashboard() {
 
                             <h2>
 
-                                Upcoming Classes
+                                Registered Classes
 
                             </h2>
 
@@ -323,7 +319,7 @@ function Dashboard() {
 
                         <span>
 
-                            {myClasses.length} / {goal} classes
+                            {monthlyCount} / {goal} classes
 
                         </span>
 
@@ -365,15 +361,14 @@ function Dashboard() {
 
                         </div>
 
-                        <AICoach
-                            user={user}
-                            membership={membership}
-                            myClasses={myClasses}
-                            availableClasses={availableClasses}
-                        />
-
                     </div>
 
+                    <AICoach
+                        user={user}
+                        membership={membership}
+                        myClasses={myClasses}
+                        availableClasses={availableClasses}
+                    />
 
                 </div>
 
